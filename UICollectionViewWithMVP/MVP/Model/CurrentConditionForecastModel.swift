@@ -10,37 +10,51 @@ import Foundation
  // request URL "http://dataservice.accuweather.com/currentconditions/v1/326175?apikey=6RSXlYdaEhRIG7iMuwgmDccQNI3ELQ3Y&language=uk-UA&details=true"
 
 public struct CurrentConditionModel {
+    let date: String
     let temperature: String
     let humidity: String
-    let wind: String
+    let windSpeed: String
+    let windDirection: String
     let currentConditionTitle: String
+    let icon: String
+    let hasPrecipitation: Bool
+    let precipitationType: String?
 }
 
 struct CurrentConditionReturnObjects: Codable {
+    let date: String
     let dayOrNight: Bool
     let icon: Int32
     let temperature: CurrentTemperature
-    let wind: Wind
+    let wind: CurrentConditionWind
     let humidity: Int32
     let text: String
+    let hasPrecipitation: Bool
+    let precipitationType: String?
     
     enum CodingKeys: String, CodingKey {
+        case date = "LocalObservationDateTime"
         case dayOrNight = "IsDayTime"
         case icon = "WeatherIcon"
         case temperature = "Temperature"
         case wind = "Wind"
         case humidity = "RelativeHumidity"
         case text = "WeatherText"
+        case hasPrecipitation = "HasPrecipitation"
+        case precipitationType = "PrecipitationType"
     }
     
     init(from decoder: Decoder) throws {
         let valueContainer = try decoder.container(keyedBy: CodingKeys.self)
+        self.date = try valueContainer.decode(String.self, forKey: CodingKeys.date)
         self.dayOrNight = try valueContainer.decode(Bool.self, forKey: CodingKeys.dayOrNight)
         self.humidity = try valueContainer.decode(Int32.self, forKey: CodingKeys.humidity)
         self.icon = try valueContainer.decode(Int32.self, forKey: CodingKeys.icon)
        self.temperature = try valueContainer.decode(CurrentTemperature.self, forKey: CodingKeys.temperature)
         self.text = try valueContainer.decode(String.self, forKey: CodingKeys.text)
-        self.wind = try valueContainer.decode(Wind.self, forKey: CodingKeys.wind)
+        self.wind = try valueContainer.decode(CurrentConditionWind.self, forKey: CodingKeys.wind)
+        self.hasPrecipitation = try valueContainer.decode(Bool.self, forKey: CodingKeys.hasPrecipitation)
+        self.precipitationType = try? valueContainer.decode(String.self, forKey: CodingKeys.precipitationType)
         
     }
 }
@@ -70,9 +84,9 @@ struct Metric: Codable {
         }
 
 }
-struct Wind: Codable {
-    let direction: DegreesValue
-    let speed: SpeedObject
+struct CurrentConditionWind: Codable {
+    let direction: Direction
+    let speed: Speed
     
     enum CodingKeys: String, CodingKey {
         case direction = "Direction"
@@ -81,12 +95,12 @@ struct Wind: Codable {
     
     init(from decoder: Decoder) throws {
         let valueContainer = try decoder.container(keyedBy: CodingKeys.self)
-        self.direction = try valueContainer.decode(DegreesValue.self, forKey: CodingKeys.direction)
-        self.speed = try valueContainer.decode(SpeedObject.self, forKey: CodingKeys.speed)
+        self.direction = try valueContainer.decode(Direction.self, forKey: CodingKeys.direction)
+        self.speed = try valueContainer.decode(Speed.self, forKey: CodingKeys.speed)
     }
 
 }
-struct SpeedObject: Codable {
+struct Speed: Codable {
     let metric: SpeedValue
     
     enum CodingKeys: String, CodingKey {
@@ -113,16 +127,16 @@ struct SpeedValue: Codable {
     }
 }
 
-struct DegreesValue: Codable {
-    let degrees: Int32
+struct Direction: Codable {
+    let localized: String
     
     enum CodingKeys: String, CodingKey {
-        case degrees = "Degrees"
+        case localized = "Localized"
     }
     
     init(from decoder: Decoder) throws {
         let valueContainer = try decoder.container(keyedBy: CodingKeys.self)
-        self.degrees = try valueContainer.decode(Int32.self, forKey: CodingKeys.degrees)
+        self.localized = try valueContainer.decode(String.self, forKey: CodingKeys.localized)
     }
 }
 
@@ -137,12 +151,17 @@ extension CurrentConditionReturnObjects {
             let jsonDecoder = JSONDecoder()
             if let data = data, let currentConditions = try? jsonDecoder.decode([CurrentConditionReturnObjects].self, from: data) {
                 let currentCondition = currentConditions[0]
-                let temperature = String(currentCondition.temperature.metric.value)
+                let icon = String(currentCondition.icon)
+                let date = currentCondition.date.getDayString()
+                let temperature = String(Int(currentCondition.temperature.metric.value))
                 let humidity = String(currentCondition.humidity)
                 let dayOrnight = currentCondition.dayOrNight
                 let windSpeed = String(currentCondition.wind.speed.metric.value)
+                let windDirection = currentCondition.wind.direction.localized
                 let title = currentCondition.text
-                let currentConditionModel = CurrentConditionModel(temperature: temperature, humidity: humidity, wind: windSpeed, currentConditionTitle: title)
+                let hasPrecipitation = currentCondition.hasPrecipitation
+                let precipitationType = currentCondition.precipitationType
+                let currentConditionModel = CurrentConditionModel(date: date, temperature: temperature, humidity: humidity, windSpeed: windSpeed, windDirection: windDirection, currentConditionTitle: title, icon: icon, hasPrecipitation: hasPrecipitation, precipitationType: precipitationType)
                 completion(currentConditionModel)
             }
             else {

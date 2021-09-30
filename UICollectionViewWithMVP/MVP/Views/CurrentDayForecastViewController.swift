@@ -7,35 +7,40 @@
 
 import UIKit
 
-class CurrentDayForecastViewController: UIViewController, CurrentConditionPresenter {
+class CurrentDayForecastViewController: UITableViewController, CurrentConditionPresenter {
     
     
-    @IBOutlet weak var hourForecastTableView: UITableView!
-    
-    
+
     var currentCondition: CurrentConditionModel?
     var hourlyForecast = [HourlyForecast]()
     let presenter = ForecastPresenter()
+    @IBOutlet weak var humidityStackView: UIStackView!
+    @IBOutlet weak var windStackView: UIStackView!
+    @IBOutlet weak var forecastImage: UIImageView!
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var descriptionForecast: UILabel!
+    @IBOutlet weak var headerColorView: UIView!
     @IBOutlet weak var tempLabel: UILabel!
-    @IBOutlet weak var windLabel: UILabel!
+    @IBOutlet weak var windSpeed: UILabel!
+    @IBOutlet weak var windDirection: UILabel!
     @IBOutlet weak var humidityLabel: UILabel!
+    @IBOutlet weak var precipitationLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         self.presenter.currentConditionDelegate = self
-        hourForecastTableView.delegate = self
-        hourForecastTableView.dataSource = self
+        
+        headerColorView.layer.cornerRadius = 10.0
         presenter.updateCurrentConditionView()
         
+        
     }
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        self.view.bounds = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 950)
-    }
+
     
 // update model
     func presentCurrentConditionForecast(currentCondition: CurrentConditionModel) {
         self.currentCondition = currentCondition
         DispatchQueue.main.async {
+            self.title = currentCondition.date
             self.updateView()
         }
     }
@@ -44,33 +49,62 @@ class CurrentDayForecastViewController: UIViewController, CurrentConditionPresen
     func presentHourlyForecast(hourlyForecastArray: [HourlyForecast]) {
         self.hourlyForecast = hourlyForecastArray
         DispatchQueue.main.async {
-            self.hourForecastTableView.reloadData()
+            self.tableView.reloadData()
         }
     }
 
     func updateView(){
         guard let conditions = currentCondition else {return}
-//        tempLabel.text = conditions.temperature
-//        windLabel.text = conditions.wind
-//        humidityLabel.text = conditions.humidity
+        print(conditions)
+        forecastImage.image = UIImage(named: conditions.icon)
+        tempLabel.text = "\(conditions.temperature)ºC"
+        windSpeed.text = "Швидкість \(conditions.windSpeed)" + " км\\г"
+        windDirection.text = "Напрямок \(conditions.windDirection)"
+        humidityLabel.text = "Вологість \(conditions.humidity)%"
+        descriptionForecast.text = conditions.currentConditionTitle
+        if conditions.hasPrecipitation {
+            precipitationLabel.text = conditions.precipitationType
+        } else {
+            precipitationLabel.text = "Без опадів"
+        }
+        humidityStackView.layer.cornerRadius = 10
+        windStackView.layer.cornerRadius = 10
+        descriptionForecast.layer.masksToBounds = true
+        precipitationLabel.layer.masksToBounds = true
+        descriptionForecast.layer.cornerRadius = 10
+        precipitationLabel.layer.cornerRadius = 10
     }
 }
 
-extension CurrentDayForecastViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension CurrentDayForecastViewController {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.hourlyForecast.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        
         let cell = tableView.dequeueReusableCell(withIdentifier: "HourForecastCell", for: indexPath) as! HourlyForecastTableViewCell
+        if indexPath == IndexPath(row: 0, section: 0) {
+            var separatorsView: [UIView] = []
+            for view in cell.subviews where String(describing: type(of: view)).hasSuffix("SeparatorView") {
+                separatorsView.append(view)
+            }
+            separatorsView.last?.removeFromSuperview()
+        }
         cell.dateLabel.text = hourlyForecast[indexPath.row].time
-        cell.temperatureLabel.text = hourlyForecast[indexPath.row].temperature
+        cell.temperatureLabel.text = "\(hourlyForecast[indexPath.row].temperature)ºC"
+        cell.imageForecast.image = UIImage(named: hourlyForecast[indexPath.row].weatherIcon)
+        if hourlyForecast[indexPath.row].hasPrecipitation {
+            cell.precipitationLabel.text = hourlyForecast[indexPath.row].precipitationType
+        } else {
+            cell.precipitationLabel.text = "Без опадів"
+        }
+        cell.separatorInset = UIEdgeInsets(top: 0, left: 11, bottom: 0, right: 11)
         
         return cell
     }
     
+
     
     
 }

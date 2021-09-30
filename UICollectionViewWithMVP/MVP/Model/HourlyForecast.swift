@@ -12,6 +12,7 @@ struct HourlyForecast {
     let weatherIcon: String
     let title: String
     let hasPrecipitation: Bool
+    let precipitationType: String?
     let isDayLight: Bool
     let temperature: String
 }
@@ -21,6 +22,7 @@ struct HourlyForecastModel: Codable {
     let weatherIcon: Int32
     let title: String
     let hasPrecipitation: Bool
+    let precipitationType: String?
     let isDayLight: Bool
     let temperature: CurrentConditionTemperature
     
@@ -29,6 +31,7 @@ struct HourlyForecastModel: Codable {
         case weatherIcon = "WeatherIcon"
         case title = "IconPhrase"
         case hasPrecipitation = "HasPrecipitation"
+        case precipitationType = "PrecipitationType"
         case isDayLight = "IsDaylight"
         case temperature = "Temperature"
     }
@@ -39,6 +42,7 @@ struct HourlyForecastModel: Codable {
         self.weatherIcon = try valueContainer.decode(Int32.self, forKey: CodingKeys.weatherIcon)
        self.title = try valueContainer.decode(String.self, forKey: CodingKeys.title)
        self.hasPrecipitation = try valueContainer.decode(Bool.self, forKey: CodingKeys.hasPrecipitation)
+        self.precipitationType = try? valueContainer.decode(String.self, forKey: CodingKeys.precipitationType)
         self.isDayLight = try valueContainer.decode(Bool.self, forKey: CodingKeys.isDayLight)
         self.temperature = try valueContainer.decode(CurrentConditionTemperature.self, forKey: CodingKeys.temperature)
         
@@ -65,13 +69,14 @@ extension HourlyForecastModel {
             if let data = data, let hourlyForecast = try? jsonDecoder.decode([HourlyForecastModel].self, from: data) {
                 var hourlyForecastArray: [HourlyForecast] = []
                 for hourForecast in hourlyForecast {
-                    let time = hourForecast.time
+                    let time = hourForecast.time.getTimeString()
                     let weatherIcon = String(hourForecast.weatherIcon)
                     let title = hourForecast.title
                     let hasPrecipitation = hourForecast.hasPrecipitation
+                    let precipitationType = hourForecast.precipitationType
                     let isDayLight = hourForecast.isDayLight
-                    let temperature = String(hourForecast.temperature.value)
-                    let hourForecastModel = HourlyForecast(time: time, weatherIcon: weatherIcon, title: title, hasPrecipitation: hasPrecipitation, isDayLight: isDayLight, temperature: temperature)
+                    let temperature = String(Int(hourForecast.temperature.value))
+                    let hourForecastModel = HourlyForecast(time: time, weatherIcon: weatherIcon, title: title, hasPrecipitation: hasPrecipitation, precipitationType: precipitationType, isDayLight: isDayLight, temperature: temperature)
                     hourlyForecastArray.append(hourForecastModel)
                 }
                 completion(hourlyForecastArray)
