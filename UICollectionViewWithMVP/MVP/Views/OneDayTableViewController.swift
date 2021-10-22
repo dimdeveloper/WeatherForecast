@@ -38,17 +38,17 @@ class OneDayTableViewController: UITableViewController {
     func updateView(with forecast: ForecastForDay){
         self.title = forecast.date
         imageOfDayForecast.image = UIImage(named: forecast.dayIcon)
-        maxTemp.text = forecast.maxTemp
+        maxTemp.text = String("\(forecast.maxTemp)" + "ºC")
         dayDescriptionForecast.text = forecast.dayDescription
-        dayPrecipitationProbability.text = forecast.dayPrecipitationProbability
-        dayWindSpeed.text = forecast.dayWindSpeed
-        dayWindDirection.text = forecast.dayWindDirection
-        nightWindSpeed.text = forecast.nightWindSpeed
-        nightWindDirection.text = forecast.nightWindDirection
+        dayPrecipitationProbability.text = String("\(forecast.dayPrecipitationProbability)" + "%")
+        dayWindSpeed.text = String("Швидкість: " + "\(forecast.dayWindSpeed)" + " км/г")
+        dayWindDirection.text = String("Напрямок: " + "\(forecast.dayWindDirection)")
+        nightWindSpeed.text = String("Швидкість: " + "\(forecast.nightWindSpeed)" + " км/г")
+        nightWindDirection.text = String("Напрямок: " + "\(forecast.nightWindDirection)")
         imageOfNightForecast.image = UIImage(named: forecast.nightIcon)
-        maxTempNight.text = forecast.minTemp
+        maxTempNight.text = String("\(forecast.minTemp)" + "ºC")
         nightDescriptionForecast.text = forecast.nightDescription
-        nightPrecipitationProbability.text = forecast.nightPrecipitationProbability
+        nightPrecipitationProbability.text = String("\(forecast.nightPrecipitationProbability)" + "%")
         
     }
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -64,7 +64,9 @@ class OneDayTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath {
         case IndexPath(row: 0, section: 0), IndexPath(row: 0, section: 1):
-            return 250
+            return 200
+        case IndexPath(row: 2, section: 0), IndexPath(row: 2, section: 1):
+            return 60
         default:
             return 44
         }
@@ -75,16 +77,14 @@ class OneDayTableViewController: UITableViewController {
                 dayLAbel.font = .systemFont(ofSize: 20)
         if section == 0 {
             dayLAbel.text = "День"
-            dayLAbel.textColor = .black
-            headerView.backgroundColor = .systemTeal
+            //headerView.backgroundColor = .systemTeal
             headerView.addSubview(dayLAbel)
         } else {
             dayLAbel.text = "Ніч"
-            dayLAbel.textColor = .white
-            headerView.backgroundColor = .black
+            //headerView.backgroundColor = .black
             headerView.addSubview(dayLAbel)
         }
-        headerView.layer.cornerRadius = 10
+        //headerView.layer.cornerRadius = 10
         return headerView
     }
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

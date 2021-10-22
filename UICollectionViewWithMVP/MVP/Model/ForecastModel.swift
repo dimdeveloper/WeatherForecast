@@ -234,6 +234,7 @@ extension ForecastModel {
     static func fetchForecast(locationID: String, completion: @escaping([ForecastForDay]) -> Void){
         let stringURL = "http://dataservice.accuweather.com/forecasts/v1/daily/5day/" + locationID + "?apikey=6RSXlYdaEhRIG7iMuwgmDccQNI3ELQ3Y&language=uk-UA&details=true&metric=true"
         let basicURL = URL(string: stringURL)!
+        print(basicURL)
         let task = URLSession.shared.dataTask(with: basicURL) { (data, responce, error) in
             let jsonDecoder = JSONDecoder()
             if let data = data, let forecast = try? jsonDecoder.decode(ForecastModel.self, from: data) {

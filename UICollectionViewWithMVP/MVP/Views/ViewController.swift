@@ -16,14 +16,17 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     let presenter = ForecastPresenter()
     var forecasts5DayArray: [ForecastForDay] = []
     let refreshControl = UIRefreshControl()
-    var cityName: String = "Київ"
-    var cityCode: String = "324505"
+    var cityName: String = "Вінниця"
+    var cityCode: String = "326175"
     override func viewDidLoad() {
         super.viewDidLoad()
         title = cityName
         presenter.delegate = self
         forecastsCollectionView.delegate = self
         forecastsCollectionView.dataSource = self
+//        let collectionViewLayout = ForecastCollectionViewLayout()
+//        
+//        forecastsCollectionView.collectionViewLayout = collectionViewLayout
         forecastsCollectionView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshWeatherData), for: .valueChanged)
         refreshControl.tintColor = .white
@@ -89,7 +92,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         cell.descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         cell.precipitationPropabilityLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            cell.dateLabel.trailingAnchor.constraint(equalTo: cell.cellDescriptionContainerView.trailingAnchor, constant: -10),
+//            cell.dateLabel.trailingAnchor.constraint(equalTo: cell.cellDescriptionContainerView.trailingAnchor, constant: -10),
             cell.dateLabel.topAnchor.constraint(equalTo: cell.cellDescriptionContainerView.topAnchor, constant: 10),
             cell.temperatureLabel.centerXAnchor.constraint(equalTo: cell.cellDescriptionContainerView.centerXAnchor),
             cell.temperatureLabel.centerYAnchor.constraint(equalTo: cell.cellDescriptionContainerView.centerYAnchor, constant: -10),
@@ -140,9 +143,13 @@ extension ViewController {
             segueDestination.forecast = self.oneDayForecast
         }
     }
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         print("Cell")
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! ForecastCollectionViewCell
+        cell.updateCell()
+//        cell.parentCellStackView.translatesAutoresizingMaskIntoConstraints = false
+//        cell.parentCellStackView.widthAnchor.constraint(equalToConstant: collectionView.bounds.inset(by: collectionView.layoutMargins).width).isActive = true
         cell.layer.cornerRadius = 10.0
         cell.dateLabel.text = forecasts5DayArray[indexPath.row].date
         cell.temperatureLabel.text = "\(forecasts5DayArray[indexPath.row].maxTemp)ºC / \(forecasts5DayArray[indexPath.row].minTemp)ºC"
@@ -153,22 +160,26 @@ extension ViewController {
         
         if indexPath == IndexPath(row: 0, section: 0){
             cell.precipitationPropabilityLabel.isHidden = false
-            cell.thermometer.isHidden = false
-            setConstraintsCellSubviewsForToday(cell: cell)
+           // cell.thermometer.isHidden = false
+            //setConstraintsCellSubviewsForToday(cell: cell)
             print("IndexPath of TODAY")
     } else {
-            setConstraintsCellSubviews(cell: cell)
-            cell.precipitationPropabilityLabel.isHidden = true
-            cell.thermometer.isHidden = true
+        cell.precipitationPropabilityLabel.isHidden = true
+       cell.thermometer.isHidden = true
+ 
+        //setConstraintsCellSubviewsForToday(cell: cell)
+        print("IndexPath of TODAY")
             
         }
         
         return cell
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let availableWidth = collectionView.bounds.inset(by: collectionView.layoutMargins).width
+        
+        let availableWidth = collectionView.bounds.width - collectionView.layoutMargins.left - collectionView.layoutMargins.right
         
         let cellWidth = availableWidth.rounded(.down)
-        return indexPath == IndexPath(row: 0, section: 0) ? CGSize(width: cellWidth, height: 200) : CGSize(width: cellWidth, height: 85)
+        return indexPath == IndexPath(row: 0, section: 0) ? CGSize(width: cellWidth, height: 180) : CGSize(width: cellWidth, height: 85)
     }
 }
