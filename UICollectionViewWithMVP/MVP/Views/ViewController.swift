@@ -16,7 +16,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     let presenter = ForecastPresenter()
     var forecasts5DayArray: [ForecastForDay] = []
     let refreshControl = UIRefreshControl()
-    var cityName: String = "Вінниця"
+    var cityName: String = "Вінниця" {
+        didSet {
+            title = cityName
+            presenter.updateView(locationID: cityCode)
+        }
+    }
     var cityCode: String = "326175"
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,11 +46,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         presenter.updateView(locationID: cityCode)
         //showActivityIndicator()
     }
-    override func viewWillAppear(_ animated: Bool) {
-        title = cityName
-        //showActivityIndicator()
-        //presenter.updateView(locationID: cityCode)
-    }
+
     func presentForecast(forecasts: [ForecastForDay]) {
         self.forecasts5DayArray = forecasts
         DispatchQueue.main.async {
@@ -128,6 +129,7 @@ extension ViewController {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath {
             case IndexPath(row: 0, section: 0):
+                presenter.delegate?.cityCode = cityCode
                 performSegue(withIdentifier: "CurrentConditionSegue", sender: nil)
             default:
                 oneDayForecast = forecasts5DayArray[indexPath.row]
@@ -142,8 +144,12 @@ extension ViewController {
             let segueDestination = segue.destination as! OneDayTableViewController
             segueDestination.forecast = self.oneDayForecast
         }
+        if segue.identifier == "CurrentConditionSegue" {
+            let segueDestination = segue.destination as! CurrentDayForecastViewController
+            segueDestination.cityCode = self.cityCode
+        }
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         print("Cell")
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! ForecastCollectionViewCell

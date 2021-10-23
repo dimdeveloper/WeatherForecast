@@ -15,6 +15,7 @@ protocol CurrentConditionPresenter: class {
 }
 protocol PresenterDelegate: class {
     func presentForecast(forecasts: [ForecastForDay])
+    var cityCode: String {get set}
 }
 
 class ForecastPresenter {
@@ -28,11 +29,11 @@ class ForecastPresenter {
         }
     }
 
-    func updateCurrentConditionView(){
-        CurrentConditionReturnObjects.fetchCurrentConditions { (currenCondition) in
+    func updateCurrentConditionView(with cityCode: String){
+        CurrentConditionReturnObjects.fetchCurrentConditions(cityCode: cityCode) { (currenCondition) in
             self.currentConditionDelegate?.presentCurrentConditionForecast(currentCondition: currenCondition)
         }
-        HourlyForecastModel.fetchHourlyForecast { (hourlyForecast) in
+        HourlyForecastModel.fetchHourlyForecast(cityCode: cityCode) { (hourlyForecast) in
             self.currentConditionDelegate?.presentHourlyForecast(hourlyForecastArray: hourlyForecast)
         }
         

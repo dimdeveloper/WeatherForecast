@@ -14,6 +14,7 @@ class CurrentDayForecastViewController: UITableViewController, CurrentConditionP
     var currentCondition: CurrentConditionModel?
     var hourlyForecast = [HourlyForecast]()
     let presenter = ForecastPresenter()
+    var cityCode: String!
     @IBOutlet weak var humidityStackView: UIStackView!
     @IBOutlet weak var windStackView: UIStackView!
     @IBOutlet weak var forecastImage: UIImageView!
@@ -30,7 +31,7 @@ class CurrentDayForecastViewController: UITableViewController, CurrentConditionP
         self.presenter.currentConditionDelegate = self
         
         headerColorView.layer.cornerRadius = 10.0
-        presenter.updateCurrentConditionView()
+        presenter.updateCurrentConditionView(with: cityCode)
         
         
     }
@@ -42,6 +43,7 @@ class CurrentDayForecastViewController: UITableViewController, CurrentConditionP
         DispatchQueue.main.async {
             self.title = currentCondition.date
             self.updateView()
+            self.tableView.reloadData()
         }
     }
     
@@ -67,12 +69,12 @@ class CurrentDayForecastViewController: UITableViewController, CurrentConditionP
         } else {
             precipitationLabel.text = "Без опадів"
         }
-        humidityStackView.layer.cornerRadius = 10
-        windStackView.layer.cornerRadius = 10
-        descriptionForecast.layer.masksToBounds = true
-        precipitationLabel.layer.masksToBounds = true
-        descriptionForecast.layer.cornerRadius = 10
-        precipitationLabel.layer.cornerRadius = 10
+//        humidityStackView.layer.cornerRadius = 10
+//        windStackView.layer.cornerRadius = 10
+//        descriptionForecast.layer.masksToBounds = true
+//        precipitationLabel.layer.masksToBounds = true
+//        descriptionForecast.layer.cornerRadius = 10
+//        precipitationLabel.layer.cornerRadius = 10
     }
 }
 
