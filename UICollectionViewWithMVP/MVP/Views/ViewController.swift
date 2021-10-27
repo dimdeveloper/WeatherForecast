@@ -9,9 +9,11 @@ import UIKit
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, PresenterDelegate, UICollectionViewDelegateFlowLayout {
     
-    
+    var index: Int = 0
+    var topInset: CGFloat = 0
     @IBOutlet weak var forecastsCollectionView: UICollectionView!
     @IBOutlet weak var cellContainerView: UIView!
+    @IBOutlet weak var activityIndication: UIActivityIndicatorView!
     var oneDayForecast: ForecastForDay!
     let presenter = ForecastPresenter()
     var forecasts5DayArray: [ForecastForDay] = []
@@ -23,8 +25,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
     }
     var cityCode: String = "326175"
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("View Did Load")
         title = cityName
         presenter.delegate = self
         forecastsCollectionView.delegate = self
@@ -37,14 +41,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         refreshControl.tintColor = .white
         let attributes: [NSAttributedString.Key : Any] = [.foregroundColor: UIColor.white, .font: UIFont.systemFont(ofSize: 17)]
         refreshControl.attributedTitle = NSAttributedString(string: "Оновлюю...", attributes: attributes)
-        showActivityIndicator()
+
+        //showActivityIndicator()
         
 //        let indicatorView = self.activityIndicator(style: UIActivityIndicatorView.Style.large, center: self.view.center)
 //        self.view.addSubview(indicatorView)
 //        indicatorView.startAnimating()
         
         presenter.updateView(locationID: cityCode)
-        //showActivityIndicator()
+        showActivityIndicator()
     }
 
     func presentForecast(forecasts: [ForecastForDay]) {
@@ -54,6 +59,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             self.refreshControl.endRefreshing()
             self.stopActivityIndicator()
         }
+    }
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        self.navigationController?.navigationBar.sizeToFit()
     }
     @objc func refreshWeatherData(){
         presenter.updateView(locationID: cityCode)
@@ -68,6 +76,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 //        }
 //        return activityIndicatorView
 //    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.navigationController?.navigationBar.sizeToFit()
+
+    }
     func showActivityIndicator(){
         let container: UIView = UIView()
         container.tag = 100
@@ -104,6 +117,27 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         ])
         
         
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        print("Section Inset Reload!")
+        return UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
+    }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+            guard let collectionView = forecastsCollectionView else { return }
+        let contentsize = collectionView.collectionViewLayout.collectionViewContentSize.height - topInset
+        let collectionViewHeight = collectionView.bounds.height
+        topInset = (collectionViewHeight - contentsize)/2
+        print(topInset)
+        print(collectionViewHeight)
+        print(contentsize)
+        print("Just contentHeight is \(collectionView.contentSize.height)")
+        print("ViewDidLayoutSubwies")
+        collectionView.collectionViewLayout.invalidateLayout()
+    }
+    override func viewWillLayoutSubviews() {
+        print("View Will LAyout Subviews")
     }
     func setConstraintsCellSubviews(cell: ForecastCollectionViewCell){
 
@@ -166,15 +200,14 @@ extension ViewController {
         
         if indexPath == IndexPath(row: 0, section: 0){
             cell.precipitationPropabilityLabel.isHidden = false
-           // cell.thermometer.isHidden = false
-            //setConstraintsCellSubviewsForToday(cell: cell)
+            cell.thermometer.isHidden = false
+            
             print("IndexPath of TODAY")
     } else {
         cell.precipitationPropabilityLabel.isHidden = true
        cell.thermometer.isHidden = true
  
-        //setConstraintsCellSubviewsForToday(cell: cell)
-        print("IndexPath of TODAY")
+        print("IndexPath of not TODAY")
             
         }
         

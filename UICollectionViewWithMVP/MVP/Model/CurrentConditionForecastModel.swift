@@ -146,7 +146,7 @@ struct Direction: Codable {
 extension CurrentConditionReturnObjects {
     static func fetchCurrentConditions(cityCode: String, completion: @escaping(CurrentConditionModel) -> Void) {
         print("FetchingCurrentConditions")
-        let url = URL(string: "http://dataservice.accuweather.com/currentconditions/v1/" + cityCode + "?apikey=6RSXlYdaEhRIG7iMuwgmDccQNI3ELQ3Y&language=uk-UA&details=true")!
+        let url = URL(string: "http://dataservice.accuweather.com/currentconditions/v1/" + cityCode + "?apikey=G2egayihsSz2c5sAyKJkQqC9YDABCIUj&language=uk-UA&details=true")!
         let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
             let jsonDecoder = JSONDecoder()
             if let data = data, let currentConditions = try? jsonDecoder.decode([CurrentConditionReturnObjects].self, from: data) {

@@ -31,7 +31,7 @@ class OneDayTableViewController: UITableViewController {
     var arrayOForecast = [ForecastForDay]()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationController?.navigationBar.sizeToFit()
         updateView(with: forecast)
     }
 

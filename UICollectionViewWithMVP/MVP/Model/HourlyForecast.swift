@@ -63,7 +63,7 @@ struct CurrentConditionTemperature: Codable {
 
 extension HourlyForecastModel {
     static  func fetchHourlyForecast(cityCode: String, completion: @escaping([HourlyForecast]) -> Void){
-        let url = URL(string: "http://dataservice.accuweather.com/forecasts/v1/hourly/12hour/" + cityCode + "?apikey=6RSXlYdaEhRIG7iMuwgmDccQNI3ELQ3Y&language=uk-UA&metric=true")!
+        let url = URL(string: "http://dataservice.accuweather.com/forecasts/v1/hourly/12hour/" + cityCode + "?apikey=G2egayihsSz2c5sAyKJkQqC9YDABCIUj&language=uk-UA&metric=true")!
         let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
             let jsonDecoder = JSONDecoder()
             if let data = data, let hourlyForecast = try? jsonDecoder.decode([HourlyForecastModel].self, from: data) {

@@ -27,7 +27,7 @@ struct City: Codable {
 extension City {
     static func fetchCities(searchText: String?, completion: @escaping([City]) -> Void) {
         guard let searchPhrase = searchText?.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlPathAllowed) else {return}
-        let url = "http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=6RSXlYdaEhRIG7iMuwgmDccQNI3ELQ3Y&q=" + searchPhrase + "&language=uk-UA"
+        let url = "http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=G2egayihsSz2c5sAyKJkQqC9YDABCIUj&q=" + searchPhrase + "&language=uk-UA"
         print(url)
         let searchURL = URL(string: url)!
         let task = URLSession.shared.dataTask(with: searchURL) { (data, responce, error) in

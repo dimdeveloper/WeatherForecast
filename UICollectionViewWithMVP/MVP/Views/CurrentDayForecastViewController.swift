@@ -18,7 +18,7 @@ class CurrentDayForecastViewController: UITableViewController, CurrentConditionP
     @IBOutlet weak var humidityStackView: UIStackView!
     @IBOutlet weak var windStackView: UIStackView!
     @IBOutlet weak var forecastImage: UIImageView!
-    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var headerView: UITableViewHeaderFooterView!
     @IBOutlet weak var descriptionForecast: UILabel!
     @IBOutlet weak var headerColorView: UIView!
     @IBOutlet weak var tempLabel: UILabel!
@@ -29,13 +29,26 @@ class CurrentDayForecastViewController: UITableViewController, CurrentConditionP
     override func viewDidLoad() {
         super.viewDidLoad()
         self.presenter.currentConditionDelegate = self
-        
+        //navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .always
         headerColorView.layer.cornerRadius = 10.0
+        extendedLayoutIncludesOpaqueBars = true
         presenter.updateCurrentConditionView(with: cityCode)
+        self.navigationController?.navigationBar.sizeToFit()
+        
+    }
+   // making tableViewHeader change height Dynamically
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        guard let headerView = headerView else {return}
+        let size = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+        if headerView.frame.size.height != size.height {
+            headerView.frame.size.height = size.height
+            tableView.tableHeaderView = headerView
+        }
         
         
     }
-
     
 // update model
     func presentCurrentConditionForecast(currentCondition: CurrentConditionModel) {
