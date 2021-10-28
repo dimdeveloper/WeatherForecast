@@ -99,13 +99,7 @@ extension CurrentDayForecastViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        
         let cell = tableView.dequeueReusableCell(withIdentifier: "HourForecastCell", for: indexPath) as! HourlyForecastTableViewCell
-        if indexPath == IndexPath(row: 0, section: 0) {
-            var separatorsView: [UIView] = []
-            for view in cell.subviews where String(describing: type(of: view)).hasSuffix("SeparatorView") {
-                separatorsView.append(view)
-            }
-            separatorsView.last?.removeFromSuperview()
-        }
+       
         cell.dateLabel.text = hourlyForecast[indexPath.row].time
         cell.temperatureLabel.text = "\(hourlyForecast[indexPath.row].temperature)ºC"
         cell.imageForecast.image = UIImage(named: hourlyForecast[indexPath.row].weatherIcon)
