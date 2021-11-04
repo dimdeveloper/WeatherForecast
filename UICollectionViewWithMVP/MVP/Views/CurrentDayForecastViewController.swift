@@ -9,8 +9,6 @@ import UIKit
 
 class CurrentDayForecastViewController: UITableViewController, CurrentConditionPresenter {
     
-    
-
     var currentCondition: CurrentConditionModel?
     var hourlyForecast = [HourlyForecast]()
     let presenter = ForecastPresenter()
@@ -29,10 +27,8 @@ class CurrentDayForecastViewController: UITableViewController, CurrentConditionP
     override func viewDidLoad() {
         super.viewDidLoad()
         self.presenter.currentConditionDelegate = self
-        //navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
         headerColorView.layer.cornerRadius = 10.0
-        extendedLayoutIncludesOpaqueBars = true
         presenter.updateCurrentConditionView(with: cityCode)
         self.navigationController?.navigationBar.sizeToFit()
         
@@ -67,7 +63,10 @@ class CurrentDayForecastViewController: UITableViewController, CurrentConditionP
             self.tableView.reloadData()
         }
     }
-
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        // fix large title appiaring after rotation
+        self.navigationController?.navigationBar.sizeToFit()
+    }
     func updateView(){
         guard let conditions = currentCondition else {return}
         print(conditions)
@@ -82,12 +81,6 @@ class CurrentDayForecastViewController: UITableViewController, CurrentConditionP
         } else {
             precipitationLabel.text = "Без опадів"
         }
-//        humidityStackView.layer.cornerRadius = 10
-//        windStackView.layer.cornerRadius = 10
-//        descriptionForecast.layer.masksToBounds = true
-//        precipitationLabel.layer.masksToBounds = true
-//        descriptionForecast.layer.cornerRadius = 10
-//        precipitationLabel.layer.cornerRadius = 10
     }
 }
 
@@ -97,9 +90,7 @@ extension CurrentDayForecastViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       
         let cell = tableView.dequeueReusableCell(withIdentifier: "HourForecastCell", for: indexPath) as! HourlyForecastTableViewCell
-       
         cell.dateLabel.text = hourlyForecast[indexPath.row].time
         cell.temperatureLabel.text = "\(hourlyForecast[indexPath.row].temperature)ºC"
         cell.imageForecast.image = UIImage(named: hourlyForecast[indexPath.row].weatherIcon)

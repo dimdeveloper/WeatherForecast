@@ -25,7 +25,6 @@ class OneDayTableViewController: UITableViewController {
     @IBOutlet weak var nightWindSpeed: UILabel!
     @IBOutlet weak var nightWindDirection: UILabel!
     
-    var indexPath: IndexPath!
     let presenter = ForecastPresenter()
     var forecast: ForecastForDay!
     var arrayOForecast = [ForecastForDay]()
@@ -77,14 +76,11 @@ class OneDayTableViewController: UITableViewController {
                 dayLAbel.font = .systemFont(ofSize: 20)
         if section == 0 {
             dayLAbel.text = "День"
-            //headerView.backgroundColor = .systemTeal
             headerView.addSubview(dayLAbel)
         } else {
             dayLAbel.text = "Ніч"
-            //headerView.backgroundColor = .black
             headerView.addSubview(dayLAbel)
         }
-        //headerView.layer.cornerRadius = 10
         return headerView
     }
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

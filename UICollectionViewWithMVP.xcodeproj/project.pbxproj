@@ -18,7 +18,6 @@
 		523B74F326DF8B2D0008ED34 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 523B74F126DF8B2D0008ED34 /* LaunchScreen.storyboard */; };
 		523F7EDF26E8B8A600CCCA12 /* HourlyForecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523F7EDE26E8B8A600CCCA12 /* HourlyForecast.swift */; };
 		523F7EE326EA00C300CCCA12 /* HourlyForecastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523F7EE226EA00C300CCCA12 /* HourlyForecastTableViewCell.swift */; };
-		523F7EE626EF2D4500CCCA12 /* OneDayForecastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523F7EE526EF2D4500CCCA12 /* OneDayForecastViewController.swift */; };
 		5240A76826F1D6C6002BCD17 /* OneDayTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5240A76726F1D6C6002BCD17 /* OneDayTableViewController.swift */; };
 		52463B4326E0AAA200C2EB61 /* ForecastModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52463B4226E0AAA200C2EB61 /* ForecastModel.swift */; };
 		52463B4626E0AB3300C2EB61 /* ForecastPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52463B4526E0AB3300C2EB61 /* ForecastPresenter.swift */; };
@@ -42,7 +41,6 @@
 		523B74F426DF8B2D0008ED34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		523F7EDE26E8B8A600CCCA12 /* HourlyForecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyForecast.swift; sourceTree = "<group>"; };
 		523F7EE226EA00C300CCCA12 /* HourlyForecastTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyForecastTableViewCell.swift; sourceTree = "<group>"; };
-		523F7EE526EF2D4500CCCA12 /* OneDayForecastViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneDayForecastViewController.swift; sourceTree = "<group>"; };
 		5240A76726F1D6C6002BCD17 /* OneDayTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneDayTableViewController.swift; sourceTree = "<group>"; };
 		52463B4226E0AAA200C2EB61 /* ForecastModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastModel.swift; sourceTree = "<group>"; };
 		52463B4526E0AB3300C2EB61 /* ForecastPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastPresenter.swift; sourceTree = "<group>"; };
@@ -123,7 +121,6 @@
 				52463B4B26E0E29A00C2EB61 /* ForecastCollectionViewCell.swift */,
 				523AD6C726E682E5004306FE /* CurrentDayForecastViewController.swift */,
 				523F7EE226EA00C300CCCA12 /* HourlyForecastTableViewCell.swift */,
-				523F7EE526EF2D4500CCCA12 /* OneDayForecastViewController.swift */,
 				5240A76726F1D6C6002BCD17 /* OneDayTableViewController.swift */,
 				520ADA6926FB199F00F64800 /* CitiesTableViewController.swift */,
 			);
@@ -212,7 +209,6 @@
 				523B74EB26DF8B2A0008ED34 /* ViewController.swift in Sources */,
 				523F7EDF26E8B8A600CCCA12 /* HourlyForecast.swift in Sources */,
 				523B74E726DF8B2A0008ED34 /* AppDelegate.swift in Sources */,
-				523F7EE626EF2D4500CCCA12 /* OneDayForecastViewController.swift in Sources */,
 				5240A76826F1D6C6002BCD17 /* OneDayTableViewController.swift in Sources */,
 				52463B4626E0AB3300C2EB61 /* ForecastPresenter.swift in Sources */,
 				52463B4F26E213D300C2EB61 /* Helpers.swift in Sources */,

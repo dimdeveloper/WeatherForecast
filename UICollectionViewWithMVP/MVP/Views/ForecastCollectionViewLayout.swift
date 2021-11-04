@@ -24,11 +24,6 @@ class ForecastCollectionViewLayout: UICollectionViewFlowLayout{
         self.itemSize.width = cellWidth
         
         self.sectionInset = UIEdgeInsets(top: topInset, left: 0.0, bottom: 0.0, right: 0.0)
-        self.sectionInsetReference = .fromSafeArea
-        print("ContentHeight is \(contentHeight)")
-        print("availableHeight is \(availableHeight)")
-        print("Top inset is \(topInset)")
-        print("selfItemHeight is \(self.itemSize.height)")
-    }
+        self.sectionInsetReference = .fromSafeArea    }
     
 }

@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="r1Q-Ji-eIy">
-                                <rect key="frame" x="0.0" y="140" width="390" height="670"/>
+                                <rect key="frame" x="0.0" y="88" width="390" height="722"/>
                                 <color key="backgroundColor" systemColor="systemTealColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="2Hy-jZ-w7u">
                                     <size key="itemSize" width="128" height="128"/>
@@ -107,7 +107,7 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Uyf-oB-NNz">
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="Uyf-oB-NNz">
                                 <rect key="frame" x="197" y="438" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
@@ -128,7 +128,6 @@
                                 <segue destination="gXG-Rx-dMc" kind="presentation" modalPresentationStyle="fullScreen" id="bJb-91-JkT"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="gearshape" catalog="system" id="yfQ-ds-7B7"/>
                     </navigationItem>
                     <connections>
                         <outlet property="activityIndication" destination="Uyf-oB-NNz" id="7QA-19-kOj"/>
@@ -358,6 +357,13 @@
                                     <variation key="default">
                                         <mask key="constraints">
                                             <exclude reference="kSW-Q5-i3s"/>
+                                            <exclude reference="JId-HR-SLF"/>
+                                            <exclude reference="NeW-Tb-6Cj"/>
+                                            <exclude reference="Paq-ke-632"/>
+                                            <exclude reference="Qdt-0H-oYb"/>
+                                            <exclude reference="c6W-NI-ejY"/>
+                                            <exclude reference="giy-3g-1F2"/>
+                                            <exclude reference="rVu-hS-oG2"/>
                                             <exclude reference="0ZQ-f4-icw"/>
                                             <exclude reference="1yC-n1-YP4"/>
                                             <exclude reference="BUK-PS-K7f"/>
@@ -367,13 +373,6 @@
                                             <exclude reference="f6d-rc-mam"/>
                                             <exclude reference="gce-3q-t8y"/>
                                             <exclude reference="qBM-pb-1nw"/>
-                                            <exclude reference="JId-HR-SLF"/>
-                                            <exclude reference="NeW-Tb-6Cj"/>
-                                            <exclude reference="Paq-ke-632"/>
-                                            <exclude reference="Qdt-0H-oYb"/>
-                                            <exclude reference="c6W-NI-ejY"/>
-                                            <exclude reference="giy-3g-1F2"/>
-                                            <exclude reference="rVu-hS-oG2"/>
                                         </mask>
                                     </variation>
                                     <variation key="heightClass=compact-widthClass=compact">
@@ -382,16 +381,16 @@
                                         </mask>
                                         <mask key="constraints">
                                             <include reference="kSW-Q5-i3s"/>
-                                            <include reference="0ZQ-f4-icw"/>
-                                            <include reference="Oq2-14-d4n"/>
-                                            <include reference="anX-aF-7zf"/>
-                                            <include reference="auV-1N-DOw"/>
                                             <exclude reference="Esc-tg-voE"/>
                                             <include reference="JId-HR-SLF"/>
                                             <include reference="Paq-ke-632"/>
                                             <exclude reference="Qdt-0H-oYb"/>
                                             <exclude reference="kwE-Nr-xT1"/>
                                             <exclude reference="qHZ-tb-DaA"/>
+                                            <include reference="0ZQ-f4-icw"/>
+                                            <include reference="Oq2-14-d4n"/>
+                                            <include reference="anX-aF-7zf"/>
+                                            <include reference="auV-1N-DOw"/>
                                         </mask>
                                     </variation>
                                     <variation key="heightClass=compact-widthClass=regular">
@@ -400,10 +399,6 @@
                                         </mask>
                                         <mask key="constraints">
                                             <include reference="kSW-Q5-i3s"/>
-                                            <include reference="0ZQ-f4-icw"/>
-                                            <include reference="Oq2-14-d4n"/>
-                                            <include reference="anX-aF-7zf"/>
-                                            <include reference="auV-1N-DOw"/>
                                             <exclude reference="Esc-tg-voE"/>
                                             <include reference="JId-HR-SLF"/>
                                             <exclude reference="NeW-Tb-6Cj"/>
@@ -412,17 +407,21 @@
                                             <exclude reference="kwE-Nr-xT1"/>
                                             <exclude reference="qHZ-tb-DaA"/>
                                             <exclude reference="rVu-hS-oG2"/>
+                                            <include reference="0ZQ-f4-icw"/>
+                                            <include reference="Oq2-14-d4n"/>
+                                            <include reference="anX-aF-7zf"/>
+                                            <include reference="auV-1N-DOw"/>
                                         </mask>
                                     </variation>
                                     <variation key="heightClass=regular-widthClass=compact">
                                         <mask key="constraints">
+                                            <include reference="giy-3g-1F2"/>
+                                            <exclude reference="qHZ-tb-DaA"/>
                                             <include reference="1yC-n1-YP4"/>
                                             <include reference="BUK-PS-K7f"/>
                                             <include reference="f6d-rc-mam"/>
                                             <include reference="gce-3q-t8y"/>
                                             <include reference="qBM-pb-1nw"/>
-                                            <include reference="giy-3g-1F2"/>
-                                            <exclude reference="qHZ-tb-DaA"/>
                                         </mask>
                                     </variation>
                                 </view>
@@ -617,7 +616,7 @@
                                                             <rect key="frame" x="167" y="0.0" width="143" height="128"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zWc-mB-aXF">
-                                                                    <rect key="frame" x="30.333333333333343" y="0.0" width="82.333333333333314" height="86.333333333333329"/>
+                                                                    <rect key="frame" x="30.333333333333336" y="0.0" width="82.333333333333314" height="86.333333333333329"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="35"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -693,13 +692,13 @@
                                                             <rect key="frame" x="42.333333333333343" y="0.0" width="267.66666666666663" height="71"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zap-8T-PrB">
-                                                                    <rect key="frame" x="226.33333333333337" y="0.0" width="41.333333333333343" height="35.666666666666664"/>
+                                                                    <rect key="frame" x="226.33333333333334" y="0.0" width="41.333333333333343" height="35.666666666666664"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="epL-p0-1CQ">
-                                                                    <rect key="frame" x="226.33333333333337" y="35.666666666666657" width="41.333333333333343" height="35.333333333333343"/>
+                                                                    <rect key="frame" x="226.33333333333334" y="35.666666666666657" width="41.333333333333343" height="35.333333333333343"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -750,7 +749,7 @@
                                                             <rect key="frame" x="155" y="0.0" width="155" height="128"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MmC-ZF-b97">
-                                                                    <rect key="frame" x="36.333333333333343" y="0.0" width="82.333333333333314" height="64"/>
+                                                                    <rect key="frame" x="36.333333333333336" y="0.0" width="82.333333333333314" height="64"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="35"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <nil key="highlightedColor"/>
@@ -826,13 +825,13 @@
                                                             <rect key="frame" x="42.333333333333343" y="0.0" width="267.66666666666663" height="71"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XSN-UK-0hf">
-                                                                    <rect key="frame" x="226.33333333333337" y="0.0" width="41.333333333333343" height="35.666666666666664"/>
+                                                                    <rect key="frame" x="226.33333333333334" y="0.0" width="41.333333333333343" height="35.666666666666664"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="68l-2r-gBb">
-                                                                    <rect key="frame" x="226.33333333333337" y="35.666666666666657" width="41.333333333333343" height="35.333333333333343"/>
+                                                                    <rect key="frame" x="226.33333333333334" y="35.666666666666657" width="41.333333333333343" height="35.333333333333343"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <nil key="highlightedColor"/>
@@ -901,7 +900,6 @@
     <resources>
         <image name="1" width="432" height="360"/>
         <image name="building.2" catalog="system" width="128" height="106"/>
-        <image name="gearshape" catalog="system" width="128" height="121"/>
         <image name="thermometer" width="64" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

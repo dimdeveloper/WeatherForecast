@@ -24,10 +24,8 @@ class CitiesTableViewController: UITableViewController {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
-            print("Empty")
         } else {
             self.citiesList.removeAll()
-            print("Not Empty")
             City.fetchCities(searchText: searchTextField.text) { citiesArray in
                 for city in citiesArray {
                     print(city.cityName)
@@ -40,9 +38,6 @@ class CitiesTableViewController: UITableViewController {
                 }
             }
         }
-        print(citiesList)
-        
-        
     }
     var defaultCitiesList: [String : String] = ["Львів" : "324561",
                                                 "Київ" : "324505",
@@ -77,12 +72,6 @@ class CitiesTableViewController: UITableViewController {
         super.viewDidLoad()
         citiesList = defaultCitiesList
         cities = citiesList.keys.sorted()
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     // MARK: - Table view data source
@@ -102,7 +91,6 @@ class CitiesTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CitiCell", for: indexPath)
         print(indexPath.row)
         cell.textLabel?.text = cities[indexPath.row]
-
         return cell
     }
     
@@ -118,7 +106,6 @@ class CitiesTableViewController: UITableViewController {
             let rootViewController = navController.topViewController as! ViewController
             rootViewController.cityCode = cityNumber
             rootViewController.cityName = choosedCity
-            
         } else {
             print("Error")
         }
