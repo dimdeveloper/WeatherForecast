@@ -28,10 +28,8 @@ class CitiesTableViewController: UITableViewController {
             self.citiesList.removeAll()
             City.fetchCities(searchText: searchTextField.text) { citiesArray in
                 for city in citiesArray {
-                    print(city.cityName)
                     self.citiesList[city.cityName] = city.key
                 }
-                print(self.citiesList)
                 self.cities = self.citiesList.keys.sorted()
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
@@ -39,7 +37,7 @@ class CitiesTableViewController: UITableViewController {
             }
         }
     }
-    var defaultCitiesList: [String : String] = ["Львів" : "324561",
+    private var defaultCitiesList: [String : String] = ["Львів" : "324561",
                                                 "Київ" : "324505",
                                                 "Івано-Франківськ" : "323684",
                                                 "Тернопіль" : "325936",
@@ -66,8 +64,8 @@ class CitiesTableViewController: UITableViewController {
                                                 "Сімферополь" : "322464"]
     var citiesList: [String : String] = [ : ]
     var cities: [String]!
-    var choosedCity: String!
-    var cityNumber: String!
+    var choosedCity: String?
+    var cityNumber: String?
     override func viewDidLoad() {
         super.viewDidLoad()
         citiesList = defaultCitiesList
@@ -98,17 +96,21 @@ class CitiesTableViewController: UITableViewController {
         guard let cell = tableView.cellForRow(at: indexPath), let city = cell.textLabel?.text else {return}
         cityNumber = citiesList[city]
         choosedCity = city
+        guard let cityName = self.choosedCity, let cityCode = self.cityNumber else {return}
+        let userCity = [cityName : cityCode]
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "CityChanged"), object: nil, userInfo: userCity)
         dismissViewController()
     }
 
     func dismissViewController(){
-        if let navController = presentingViewController as? UINavigationController {
-            let rootViewController = navController.topViewController as! ViewController
-            rootViewController.cityCode = cityNumber
-            rootViewController.cityName = choosedCity
-        } else {
-            print("Error")
-        }
+//        if let navController = presentingViewController as? UINavigationController {
+//            let rootViewController = navController.topViewController as! ViewController
+//            guard let cityName = self.choosedCity, let cityCode = self.cityNumber else {return}
+//            rootViewController.cityCode = cityCode
+//            rootViewController.cityName = cityName
+//        } else {
+//            print("Error")
+//        }
         dismiss(animated: true, completion: nil)
     }
     /*

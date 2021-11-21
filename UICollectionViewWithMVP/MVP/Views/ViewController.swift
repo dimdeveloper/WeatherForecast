@@ -31,9 +31,23 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         presenter.delegate = self
         forecastsCollectionView.delegate = self
         forecastsCollectionView.dataSource = self
+        // adding Notifacation Center observer for city selecting
+        let citySelectObserverName = Notification.Name("CityChanged")
+        NotificationCenter.default.addObserver(self, selector: #selector(cityChanged), name: citySelectObserverName, object: nil)
         refreshActivityIndicator()
         activityIndication.startAnimating()
         presenter.updateView(locationID: cityCode)
+    }
+    @objc func cityChanged(_ notofication: Notification){
+        if let data = notofication.userInfo as? [String : String] {
+            for (cityName, cityNumber) in data {
+                self.cityName = cityName
+                self.cityCode = cityNumber
+            }
+        } else {
+            print("Error!")
+        }
+        
     }
     func refreshActivityIndicator(){
         forecastsCollectionView.refreshControl = refreshControl
@@ -65,7 +79,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        print("Section Inset Reload!")
         return UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
     }
     override func viewDidLayoutSubviews() {
@@ -108,7 +121,6 @@ extension ViewController {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("Cell")
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! ForecastCollectionViewCell
         cell.layer.cornerRadius = 10.0
         cell.dateLabel.text = forecasts5DayArray[indexPath.row].date

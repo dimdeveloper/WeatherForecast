@@ -69,7 +69,6 @@ class CurrentDayForecastViewController: UITableViewController, CurrentConditionP
     }
     func updateView(){
         guard let conditions = currentCondition else {return}
-        print(conditions)
         forecastImage.image = UIImage(named: conditions.icon)
         tempLabel.text = "\(conditions.temperature)ºC"
         windSpeed.text = "Швидкість \(conditions.windSpeed)" + " км\\г"
